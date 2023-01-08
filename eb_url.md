@@ -1,0 +1,1 @@
+EB_PUBLIC_URL: http://udagram-dev2.us-east-1.elasticbeanstalk.com/
