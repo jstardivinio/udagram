@@ -38,6 +38,31 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   } );
   
 
+  // /filteredimage Endpoint
+  // Retrieve an image from a public URL
+  app.get( "/filteredimage", async ( req, res ) => {
+
+    //validate the request
+    let image_url: any  = req.query.image_url;
+
+    if ( !image_url ) {
+      return res.status(400)
+                .send('An image URL is required for processing');
+    }
+
+    try {
+          //Download and filter the image from specified url
+        let filtered_image: string = await filterImageFromURL(image_url)
+
+        res.status(200).sendFile(filtered_image, () => {       
+          deleteLocalFiles([filtered_image]);       
+        });
+      
+    } catch (error) {
+      res.status(422).send('Sorry we are unable to process this image: '+image_url);
+    }
+  } );
+
   // Start the Server
   app.listen( port, () => {
       console.log( `server running http://localhost:${ port }` );
