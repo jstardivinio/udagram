@@ -40,10 +40,10 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   // /filteredimage Endpoint
   // Retrieve an image from a public URL
-  app.get( "/filteredimage", async ( req, res ) => {
+  app.get( "/filteredimage", async ( req: express.Request, res: express.Response ) => {
 
     //validate the request
-    let image_url: any  = req.query.image_url;
+    let image_url: string | string[] | qs.ParsedQs[string] | qs.ParsedQs[] = req.query.image_url;
 
     if ( !image_url ) {
       return res.status(400)
